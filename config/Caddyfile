@@ -1,0 +1,28 @@
+submit.ltreb-reservoirs.org {
+
+    tls cboettig@gmail.com
+    reverse_proxy minio:9000 {
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+        header_up Host {host}
+        health_path /minio/health/ready
+    }
+}
+
+console.ltreb-reservoirs.org {
+
+    tls cboettig@gmail.com
+    reverse_proxy minio:9001 {
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+        header_up Host {host}
+        health_path /minio/health/ready
+    }
+}
+
+rstudio.ltreb-reservoirs.org {
+  tls cboettig@gmail.com
+  reverse_proxy rstudio:8787 {
+    header_up Host {host}
+  }
+}
