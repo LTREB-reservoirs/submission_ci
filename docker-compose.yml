@@ -9,27 +9,21 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 9001:9001
     restart: always
 
   minio: 
     image: minio/minio
-    command: server /data{1...4}  --console-address ":9001"
+    command: server /data  --console-address ":9001"
     restart: always
     volumes:
-      - /${S3_BASE}/disk1:/data1
-      - /${S3_BASE}/disk2:/data2
-      - /${S3_BASE}/disk3:/data3
-      - /${S3_BASE}/disk4:/data4
+      - /home/exouser/data:/data
     env_file: ./config/minio_env.sh
 
   rstudio:
-    build: 
-      context: . 
-    image: rocker/rstudio
+    image: rocker/rstudio:latest
     restart: always
     volumes:
-      - /${S3_BASE}/log/cron:/var/log
-      - /${S3_BASE}:/efi_neon_challenge
-      - ..:/home/rstudio
+      - /home/exouser:/home/rstudio
     env_file: ./config/rstudio_env.sh
     #command: /bin/bash -c "chown -R rstudio.rstudio /home/rstudio/; /init"

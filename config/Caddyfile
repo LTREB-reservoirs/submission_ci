@@ -1,6 +1,6 @@
 submit.ltreb-reservoirs.org {
 
-    tls cboettig@gmail.com
+    tls rqthomas@vt.edu
     reverse_proxy minio:9000 {
         header_up X-Forwarded-Proto {scheme}
         header_up X-Forwarded-Host {host}
@@ -11,7 +11,7 @@ submit.ltreb-reservoirs.org {
 
 console.ltreb-reservoirs.org {
 
-    tls cboettig@gmail.com
+    tls rqthomas@vt.edu
     reverse_proxy minio:9001 {
         header_up X-Forwarded-Proto {scheme}
         header_up X-Forwarded-Host {host}
@@ -21,7 +21,7 @@ console.ltreb-reservoirs.org {
 }
 
 rstudio.ltreb-reservoirs.org {
-  tls cboettig@gmail.com
+  tls rqthomas@vt.edu
   reverse_proxy rstudio:8787 {
     header_up Host {host}
   }
