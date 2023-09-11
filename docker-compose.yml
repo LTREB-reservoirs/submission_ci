@@ -25,41 +25,11 @@ services:
   rstudio:
     build: 
       context: . 
-    image: eco4cast/cron
+    image: rocker/rstudio
     restart: always
     volumes:
       - /${S3_BASE}/log/cron:/var/log
       - /${S3_BASE}:/efi_neon_challenge
-      - ..:/home/rstudio/Documents
-      - /opt/local/renv/cache:/renv/cache
-      - ./config/Renviron:/home/rstudio/.Renviron
+      - ..:/home/rstudio
     env_file: ./config/rstudio_env.sh
     #command: /bin/bash -c "chown -R rstudio.rstudio /home/rstudio/; /init"
-
-  shiny:
-    build:
-      context: shiny
-    image: eco4cast/shiny
-    restart: always
-    volumes:
-      - ..:/srv/shiny-server
-      - /${S3_BASE}/log/shiny:/var/log/shiny-server
-      - /${S3_BASE}:/efi_neon_challenge
-
-  ## not necessary, just for convenience 
-  monitor:
-    image: netdata/netdata  
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    security_opt: 
-      - apparmor=unconfined
- 
-  prometheus:
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    image: prom/prometheus
